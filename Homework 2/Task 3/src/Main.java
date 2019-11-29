@@ -1,4 +1,5 @@
 public class Main {
+	
 	/**
      * Create an array of the first 20 Fibonacci numbers and display it
      */
