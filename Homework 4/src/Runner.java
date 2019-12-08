@@ -1,7 +1,6 @@
 public class Runner {
 
     public static void main(String[] args) {
-        CarProcessor carProcessor = new CarProcessor();
         Car[] cars = new Car[]{
                 new Car(1, "Fiat", "500L", 2017, "Black", 3000, "BM6452BA"),
                 new Car(2, "Fiat", "124 Spider", 2016, "Blue", 7000, "AX7452AC"),
@@ -11,14 +10,22 @@ public class Runner {
                 new Car(6, "Fiat", "500L", 2012, "Black", 2500, "AX1152BA")
         };
 
+        CarProcessor carProcessor = new CarProcessor(cars);
+        System.out.println("Cars brand 'Nissan':");
+        carProcessor.findCarByBrand("Nissan");
+        System.out.println("\nCars by model 'Fabia' and more than 3 year in operation:");
+        carProcessor.findCarByModel("Fabia", 3);
+        System.out.println("\nCars made in 2012 and price more than 2000:");
+        carProcessor.findCarByYear(2012, 2000);
+
+        System.out.println();
+
+        CarProcessor carProcessorDefault = new CarProcessor();
         System.out.println("Cars brand 'Fiat':");
-        carProcessor.findCarByBrand(cars, "Fiat");
+        carProcessorDefault.findCarByBrand(cars, "Fiat");
         System.out.println("\nCars by model '500L and more than 4 year in operation:");
-        carProcessor.findCarByModel(cars, "500L", 4);
+        carProcessorDefault.findCarByModel(cars, "500L", 4);
         System.out.println("\nCars made in 2016 and price more than 6000$:");
-        carProcessor.findCarByYear(cars, 2016, 6000);
-
-
+        carProcessorDefault.findCarByYear(cars, 2016, 6000);
     }
-
 }
