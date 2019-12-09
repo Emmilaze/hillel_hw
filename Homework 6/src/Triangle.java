@@ -25,7 +25,7 @@ public class Triangle {
         return c;
     }
 
-    public void setSides(){
+    public void setSides() {
         ab = setAb();
         bc = setBc();
         ac = setAc();
@@ -75,7 +75,6 @@ public class Triangle {
     }
 
     public boolean isRight() {
-        //(a*a+b*b=c*c)or(b*b+c*c=a*a)or(c*c+a*a=b*b)
         if ((ab * ab + bc * bc == ac * ac) || (ab * ab + ac * ac == bc * bc) || (bc * bc + ac * ac == ab * ab))
             return true;
         return false;
