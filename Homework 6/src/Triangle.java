@@ -2,6 +2,7 @@ public class Triangle {
     private final Point a;
     private final Point b;
     private final Point c;
+
     private int ab;
     private int bc;
     private int ac;
@@ -24,23 +25,59 @@ public class Triangle {
         return c;
     }
 
+    public void setSides(){
+        ab = setAb();
+        bc = setBc();
+        ac = setAc();
+    }
+
+    public int getVector(int firstNumber, int secondNumber) {
+        return secondNumber - firstNumber;
+    }
+
+    private int setAb() {
+        return getDistance(getVector(b.getX(), a.getX()), getVector(b.getY(), a.getY()));
+    }
+
+    private int setBc() {
+        return getDistance(getVector(c.getX(), b.getX()), getVector(c.getY(), b.getY()));
+    }
+
+    private int setAc() {
+        return getDistance(getVector(c.getX(), a.getX()), getVector(c.getY(), a.getY()));
+    }
+
+    private int getDistance(double firstNumber, double secondNumber) {
+        return (int) Math.sqrt(Math.pow(firstNumber, 2) + Math.pow(secondNumber, 2));
+    }
+
+    public double getPerimeter() {
+        return ab + bc + ac;
+    }
+
+    public double getSquare() {
+        double halfPerimeter = getPerimeter() / 2;
+        return Math.sqrt(halfPerimeter * (halfPerimeter - ab) * (halfPerimeter - bc) * (halfPerimeter - ac));
+    }
+
     public boolean isIsosceles() {
-        if (a == b)
+        if (isEquilateral())
             return true;
-        else if (b == c)
+        if (ab == bc)
             return true;
-        else if (a == c)
+        else if (bc == ac)
             return true;
         return false;
     }
 
     public boolean isEquilateral() {
-        return a == b && a == c;
+        return ab == bc && bc == ac;
     }
 
     public boolean isRight() {
-        if(a*a+b*b == c*c)
+        //(a*a+b*b=c*c)or(b*b+c*c=a*a)or(c*c+a*a=b*b)
+        if ((ab * ab + bc * bc == ac * ac) || (ab * ab + ac * ac == bc * bc) || (bc * bc + ac * ac == ab * ab))
             return true;
-
+        return false;
     }
 }
