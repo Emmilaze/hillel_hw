@@ -42,4 +42,12 @@ public class VehicleProcessor {
         }
         return newArray;
     }
+
+    public static void countAllCost(Vehicle[] vehicles) {
+        int sum = 0;
+        for (Vehicle vehicle : vehicles) {
+            sum += vehicle.getPrice();
+        }
+        System.out.println("\nAll cost of carpark: " + sum);
+    }
 }

@@ -16,5 +16,6 @@ public class CarPark {
 
         VehicleProcessor.sortByFuel(carPark);
         VehicleProcessor.findBySpeed(carPark, 90, 110);
+        VehicleProcessor.countAllCost(carPark);
     }
 }
