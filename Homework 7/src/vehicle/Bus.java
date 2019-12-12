@@ -1,3 +1,5 @@
+package vehicle;
+
 public class Bus extends Vehicle {
     private int numberOfSears;
     private int currentFuel;

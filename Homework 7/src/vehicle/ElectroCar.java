@@ -1,3 +1,5 @@
+package vehicle;
+
 public class ElectroCar extends Vehicle {
     private int batteryCharge;
     private String color;

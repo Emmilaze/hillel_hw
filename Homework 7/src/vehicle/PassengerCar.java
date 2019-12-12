@@ -1,3 +1,5 @@
+package vehicle;
+
 public class PassengerCar extends Vehicle {
     private int luggageCapacity;
     private int numberOfSears;

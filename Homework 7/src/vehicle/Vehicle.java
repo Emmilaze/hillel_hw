@@ -1,3 +1,5 @@
+package vehicle;
+
 public abstract class Vehicle {
     protected int id;
     protected int fuelConsumption;

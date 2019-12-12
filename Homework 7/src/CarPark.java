@@ -1,3 +1,5 @@
+import vehicle.*;
+
 public class CarPark {
 
     public static void main(String[] args) {

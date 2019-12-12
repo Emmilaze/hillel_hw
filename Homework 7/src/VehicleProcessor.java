@@ -1,3 +1,5 @@
+import vehicle.Vehicle;
+
 public class VehicleProcessor {
     private static Vehicle[] array = new Vehicle[0];
     private static int index;
