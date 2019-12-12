@@ -11,27 +11,12 @@ public class Triangle {
         this.a = a;
         this.b = b;
         this.c = c;
-    }
-
-    public Point getA() {
-        return a;
-    }
-
-    public Point getB() {
-        return b;
-    }
-
-    public Point getC() {
-        return c;
-    }
-
-    public void setSides() {
         ab = setAb();
         bc = setBc();
         ac = setAc();
     }
 
-    public int getVector(int firstNumber, int secondNumber) {
+    private int getVector(int firstNumber, int secondNumber) {
         return secondNumber - firstNumber;
     }
 
@@ -67,6 +52,8 @@ public class Triangle {
             return true;
         else if (bc == ac)
             return true;
+        else if(ab == ac)
+            return true;
         return false;
     }
 
@@ -75,8 +62,6 @@ public class Triangle {
     }
 
     public boolean isRight() {
-        if ((ab * ab + bc * bc == ac * ac) || (ab * ab + ac * ac == bc * bc) || (bc * bc + ac * ac == ab * ab))
-            return true;
-        return false;
+        return (ab * ab + bc * bc == ac * ac) || (ab * ab + ac * ac == bc * bc) || (bc * bc + ac * ac == ab * ab);
     }
 }
