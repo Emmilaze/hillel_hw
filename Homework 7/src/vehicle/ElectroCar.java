@@ -1,27 +1,46 @@
 package vehicle;
 
-public class ElectroCar extends Vehicle {
+public class ElectroCar implements Car {
+    private int id;
+    private int fuelConsumption;
+    private int price;
+    private int speed;
     private int batteryCharge;
     private String color;
 
     public ElectroCar(int id, int fuelConsumption, int price, int speed, int batteryCharge, String color) {
-        super(id, fuelConsumption, price, speed);
+        this.id = id;
+        this.fuelConsumption = fuelConsumption;
+        this.price = price;
+        this.speed = speed;
         this.batteryCharge = batteryCharge;
         this.color = color;
     }
 
     @Override
-    public void ride() {
-        while (batteryCharge > 20) {
-            makeSound();
-            batteryCharge -= 5;
-        }
-        System.out.println("Oops, need charge!");
+    public String toString() {
+        return "ElectroCar #" + getId() + ", battery charge = " + batteryCharge + ", color = " + color +
+                ", fuel consumption = " + getFuelConsumption() + ", price = " + getPrice() + ", speed = " +
+                getSpeed() + ".";
     }
 
     @Override
-    public String toString() {
-        return "ElectroCar #" + id + ", battery charge = " + batteryCharge + ", color = " + color +
-                ", fuel consumption = " + fuelConsumption + ", price = " + price + ", speed = " + speed + ".";
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public int getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public int getSpeed() {
+        return speed;
     }
 }

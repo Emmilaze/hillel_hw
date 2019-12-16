@@ -1,31 +1,46 @@
 package vehicle;
 
-public class Minivan extends Vehicle {
+public class Minivan implements Car {
+    private int id;
+    private int fuelConsumption;
+    private int price;
+    private int speed;
     private int numberOfSears;
     private int currentFuel;
 
     public Minivan(int id, int fuelConsumption, int price, int speed, int numberOfSears, int currentFuel) {
-        super(id, fuelConsumption, price, speed);
+        this.id = id;
+        this.fuelConsumption = fuelConsumption;
+        this.price = price;
+        this.speed = speed;
         this.numberOfSears = numberOfSears;
         this.currentFuel = currentFuel;
     }
 
-    private void countSeats() {
-        System.out.println(numberOfSears + " passengers can be in the car without driver.");
-    }
-
-    @Override
-    public void ride() {
-        while (currentFuel > 10) {
-            System.out.println();
-            currentFuel -= 5;
-        }
-        System.out.println("Oops, need more fuel!");
-    }
-
     @Override
     public String toString() {
-        return "Minivan #" + id + ", numberOfSears = " + numberOfSears + ", currentFuel = " + currentFuel +
-                ", fuelConsumption = " + fuelConsumption + "L/100 km, price = " + price + "$, speed = " + speed + "km/h.";
+        return "Minivan #" + getId() + ", numberOfSears = " + numberOfSears + ", currentFuel = " + currentFuel +
+                ", fuelConsumption = " + getFuelConsumption() + "L/100 km, price = " + getPrice() +
+                "$, speed = " + getSpeed() + "km/h.";
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public int getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public int getSpeed() {
+        return speed;
     }
 }
