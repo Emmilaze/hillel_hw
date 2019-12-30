@@ -14,11 +14,11 @@ public class Bouquet {
     }
 
     public void addFlower(Flower flower) {
-        flowers = (Flower[]) Utils.increaseMassive(flower, flowers);
+        flowers = Utils.increaseMassive(flower, flowers);
     }
 
     public void addAccessory(Accessory accessory) {
-        accessories = (Accessory[]) Utils.increaseMassive(accessory, accessories);
+        accessories = Utils.increaseMassive(accessory, accessories);
     }
 
     public Flower[] getFlowers() {

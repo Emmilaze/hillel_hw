@@ -2,7 +2,6 @@ package util;
 
 import entity.Accessory;
 import entity.Flower;
-import exceptions.MyException;
 import shop.Bouquet;
 import shop.FlowerShop;
 
@@ -11,6 +10,7 @@ import java.util.Scanner;
 public class ConsoleMenu {
     private FlowerShop flowerShop;
     private Scanner scanner;
+    private Bouquet currentBouquet;
 
     public ConsoleMenu(FlowerShop flowerShop) {
         this.flowerShop = flowerShop;
@@ -22,7 +22,7 @@ public class ConsoleMenu {
         ConsoleMenu consoleMenu = new ConsoleMenu(shop);
         consoleMenu.greeting();
         System.out.println("Customer:");
-        consoleMenu.makeOrder(null);
+        consoleMenu.makeOrder();
     }
 
     public void greeting() {
@@ -31,88 +31,129 @@ public class ConsoleMenu {
         System.out.println("\tCan I help you?");
     }
 
-    public void makeOrder(Bouquet bouquet) {
+    public void makeOrder() {
         System.out.println("\t1. Create bouquet");
         System.out.println("\t2. Bouquets operation");
         System.out.println("\t3. Print current bouquet");
         System.out.println("\t4. Leave the shop");
 
-        switch (getChoice()) {
-            case 1:
-                createBouquet(bouquet);
-                break;
-            case 2:
-                makeOperations(bouquet);
-                break;
-            case 3:
-                printBouquet(bouquet);
-                break;
-            case 4:
-                exit();
-                break;
+        int choice = getChoice();
+        if (choice < 5 && choice > 0) {
+            switch (choice) {
+                case 1:
+                    Bouquet bouquet = new Bouquet();
+                    flowerShop.addBouquet(bouquet);
+                    currentBouquet = bouquet;
+                    createBouquet();
+                    break;
+                case 2:
+                    makeOperations();
+                    break;
+                case 3:
+                    printBouquet();
+                    break;
+                case 4:
+                    exit();
+                    break;
+            }
+        } else {
+            System.out.println("Wrong select!");
+            makeOrder();
         }
     }
 
-    public void createBouquet(Bouquet bouquet) {
-        if (bouquet == null)
-            bouquet = new Bouquet();
-        flowerShop.addBouquet(bouquet);
+    public void createBouquet() {
         System.out.println("\t1. Add flower");
         System.out.println("\t2. Add accessory");
         System.out.println("\t3. Back");
-
-        switch (getChoice()) {
-            case 1:
-                addFlower(bouquet);
-                break;
-            case 2:
-                addAccessory(bouquet);
-                break;
-            case 3:
-                makeOrder(bouquet);
-                break;
+        int choice = getChoice();
+        if (choice < 4 && choice > 0) {
+            switch (choice) {
+                case 1:
+                    addFlower();
+                    break;
+                case 2:
+                    addAccessory();
+                    break;
+                case 3:
+                    makeOrder();
+                    break;
+            }
+        } else {
+            System.out.println("Wrong select!");
+            createBouquet();
         }
     }
 
-    public void makeOperations(Bouquet bouquet) {
-        if (bouquet != null) {
+    public void makeOperations() {
+        if (flowerShop.getBouquets().length != 0) {
             System.out.println("\t1 Find out all cost");
             System.out.println("\t2 Sort by freshness");
             System.out.println("\t3 Find a flower by the stem");
             System.out.println("\t4 Back");
-
-            switch (getChoice()) {
-                case 1:
-                    System.out.println(flowerShop.calculateCost(bouquet));
-                    makeOperations(bouquet);
-                    break;
-                case 2:
-                    printBouquet(flowerShop.sortByFreshness(bouquet));
-                    makeOperations(bouquet);
-                    break;
-                case 3:
-                    findByStem(bouquet);
-                    break;
-                case 4:
-                    makeOrder(bouquet);
-                    break;
+            int choice = getChoice();
+            if (choice < 5 && choice > 0) {
+                switch (choice) {
+                    case 1:
+                        chooseBouquet();
+                        System.out.println(flowerShop.calculateCost(currentBouquet));
+                        makeOperations();
+                        break;
+                    case 2:
+                        chooseBouquet();
+                        flowerShop.sortByFreshness(currentBouquet);
+                        printBouquet();
+                        makeOperations();
+                        break;
+                    case 3:
+                        chooseBouquet();
+                        findByStem(currentBouquet);
+                        break;
+                    case 4:
+                        makeOrder();
+                        break;
+                }
+            } else {
+                System.out.println("Wrong select!");
+                makeOperations();
             }
         } else {
             System.out.println("First of all you need to create the bouquet!");
-            makeOrder(null);
+            makeOrder();
+        }
+
+    }
+
+    public void chooseBouquet() {
+        if (flowerShop.getBouquets().length == 0) {
+            System.out.println("Please create the bouquet!");
+        } else {
+            System.out.println("Please choose bouquet:");
+            for (int i = 0; i < flowerShop.getBouquets().length; i++) {
+                int j = i;
+                System.out.println("#" + (j + 1));
+                System.out.println(flowerShop.getBouquets()[i].toString());
+            }
+            int choice = getChoice();
+            try {
+                currentBouquet = flowerShop.getBouquets()[choice - 1];
+            } catch (Exception e) {
+                System.out.println("Wrong parameter!");
+                chooseBouquet();
+            }
         }
     }
 
-    private void addAccessory(Bouquet bouquet) {
+    private void addAccessory() {
         System.out.println("Type");
         String type = scanner.nextLine();
         System.out.println("Price");
         int price = Utils.parseToNumber(scanner);
-        flowerShop.addAccessoryToBouquet(bouquet, new Accessory(price, type));
-        createBouquet(bouquet);
+        flowerShop.addAccessoryToBouquet(currentBouquet, new Accessory(price, type));
+        createBouquet();
     }
 
-    public void addFlower(Bouquet bouquet) {
+    public void addFlower() {
         System.out.println("Type");
         String type = scanner.nextLine();
         System.out.println("Percentage of freshness");
@@ -121,22 +162,20 @@ public class ConsoleMenu {
         int price = Utils.parseToNumber(scanner);
         System.out.println("Stem length");
         int length = Utils.parseToNumber(scanner);
-        flowerShop.addFlowerToBouquet(bouquet, new Flower(price, type, percent, length));
-        createBouquet(bouquet);
+        flowerShop.addFlowerToBouquet(currentBouquet, new Flower(price, type, percent, length));
+        createBouquet();
     }
 
-    public void printBouquet(Bouquet bouquet) {
-        if (bouquet != null) {
+    public void printBouquet() {
+        for (Bouquet bouquet : flowerShop.getBouquets()) {
             System.out.println(bouquet.toString());
-        } else {
-            System.out.println("First of all you need to create the bouquet!");
-            makeOrder(null);
         }
-        makeOrder(bouquet);
+        makeOrder();
     }
 
     public void exit() {
         scanner.close();
+        System.out.println("Thank you!");
         System.exit(0);
     }
 
@@ -153,21 +192,13 @@ public class ConsoleMenu {
     }
 
     public void findByStem(Bouquet bouquet) {
-        try {
-            System.out.println("Minimum stem size");
-            int min = Utils.parseToNumber(scanner);
-            System.out.println("Maximum stem size");
-            int max = Utils.parseToNumber(scanner);
-            if (min < 0 || max < 0)
-                throw new MyException();
-            for (Flower flower : flowerShop.findByStem(bouquet, min, max)) {
-                System.out.println(flower.toString());
-            }
-            makeOperations(bouquet);
-        } catch (MyException e) {
-            e.printStackTrace();
-            System.out.println("You enter the negative numbers");
-            makeOperations(bouquet);
+        System.out.println("Minimum stem size");
+        int min = Utils.parseToNumber(scanner);
+        System.out.println("Maximum stem size");
+        int max = Utils.parseToNumber(scanner);
+        for (Flower flower : flowerShop.findByStem(bouquet, min, max)) {
+            System.out.println(flower.toString());
         }
-}
+        makeOperations();
+    }
 }

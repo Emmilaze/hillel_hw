@@ -2,6 +2,7 @@ package shop;
 
 import entity.Accessory;
 import entity.Flower;
+import exceptions.NegativeParams;
 import util.Utils;
 
 public class FlowerShop {
@@ -11,8 +12,12 @@ public class FlowerShop {
         this.bouquets = new Bouquet[0];
     }
 
+    public Bouquet[] getBouquets() {
+        return bouquets;
+    }
+
     public void addBouquet(Bouquet bouquet) {
-        bouquets = (Bouquet[]) Utils.increaseMassive(bouquet, bouquets);
+        bouquets = Utils.increaseMassive(bouquet, bouquets);
     }
 
     public void addFlowerToBouquet(Bouquet existingBouquet, Flower flower) {
@@ -52,13 +57,22 @@ public class FlowerShop {
     }
 
     public Flower[] findByStem(Bouquet bouquet, int minStem, int maxStem) {
-        Flower[] flowers = bouquet.getFlowers();
-        Flower[] result = new Flower[0];
-        for (Flower flower : flowers) {
-            if (flower.getStemLength() >= minStem && flower.getStemLength() <= maxStem) {
-                result = (Flower[]) Utils.increaseMassive(flower, flowers);
+        if (minStem < 0 || maxStem < 0) {
+            try {
+                throw new NegativeParams();
+            } catch (NegativeParams negativeParams) {
+                System.out.println("You enter negative numbers!");
             }
+        } else {
+            Flower[] flowers = bouquet.getFlowers();
+            Flower[] result = new Flower[0];
+            for (Flower flower : flowers) {
+                if (flower.getStemLength() >= minStem && flower.getStemLength() <= maxStem) {
+                    result = Utils.increaseMassive(flower, flowers);
+                }
+            }
+            return result;
         }
-        return result;
+        return null;
     }
 }
