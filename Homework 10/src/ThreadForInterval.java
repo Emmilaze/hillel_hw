@@ -11,7 +11,7 @@ public class ThreadForInterval extends Thread{
 
     @Override
     public void run() {
-  //      System.out.println("Thread #" + currentThread().getName() + " starts");
+        System.out.println(currentThread().getName() + " starts");
         int currentNumber = firstNumber;
         while (currentNumber <= lastNumber){
             if(isSimple(currentNumber)){
@@ -19,7 +19,7 @@ public class ThreadForInterval extends Thread{
             }
             currentNumber += amount;
         }
-//        System.out.println("Thread #" + currentThread().getName() + " finished");
+        System.out.println(currentThread().getName() + " finished");
     }
 
     public boolean isSimple(int number) {

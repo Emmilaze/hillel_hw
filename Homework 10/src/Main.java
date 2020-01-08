@@ -48,8 +48,7 @@ public class Main {
             threadsArray[i] = thread;
             thread.start();
         }
-        long startTime = System.nanoTime();
-
+ //       long startTime = System.nanoTime();
         for(int i = 0; i < threadsArray.length; i++){
             try {
                 threadsArray[i].join();
@@ -58,13 +57,12 @@ public class Main {
             }
         }
 
-//        for(int i = 0; i < array.length; i++){
-//            System.out.println(array[i] + " ");
-//        }
-        long endTime = System.nanoTime();
-
-        long duration = (endTime - startTime);
-        System.out.println(duration/1000000);
+        for(int i = 0; i < array.length; i++){
+            System.out.println(array[i] + " ");
+        }
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime);
+//        System.out.println(duration/1000000);
     }
 
     public static synchronized void putToArray(int number){
