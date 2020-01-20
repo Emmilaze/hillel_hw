@@ -28,7 +28,7 @@ public class CarParkStorage {
 
     public void putCarsToFile(Car[] cars) {
         if (outputFile.isFile()) {
-            try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile, false)) {
                 for (Car car : cars) {
                     fileOutputStream.write(car.writeToFile());
                 }
