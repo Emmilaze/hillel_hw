@@ -1,6 +1,9 @@
-import vehicle.Car;
+package main;
+
+import main.vehicle.Car;
 
 public class VehicleView {
+
     public void printSorting(Car[] array) {
         for (Car vehicle : array) {
             System.out.println("Vehicle #" + vehicle.getId() + ", fuel consumption: " + vehicle.getFuelConsumption());

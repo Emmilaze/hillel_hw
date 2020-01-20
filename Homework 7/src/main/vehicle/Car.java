@@ -1,4 +1,4 @@
-package vehicle;
+package main.vehicle;
 
 public interface Car {
     int getId();
@@ -8,4 +8,6 @@ public interface Car {
     int getPrice();
 
     int getSpeed();
+
+    byte[] writeToFile();
 }

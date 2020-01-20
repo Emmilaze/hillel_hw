@@ -1,4 +1,4 @@
-package vehicle;
+package main.vehicle;
 
 public class PassengerCar implements Car {
     private int id;
@@ -24,6 +24,12 @@ public class PassengerCar implements Car {
         return "PassengerCar #" + getId() + ", luggage capacity = " + luggageCapacity + " kg, number of sears = " +
                 numberOfSears + ", currentFuel = " + currentFuel + "L, fuel consumption = " + getFuelConsumption() +
                 "l/100 km, price = " + getPrice() + "$, speed = " + getSpeed() + "km/h.";
+    }
+
+    @Override
+    public byte[] writeToFile() {
+        return ("PassengerCar, " + getId() + ", " + getFuelConsumption() + ", " + getPrice() + ", " + getSpeed() + ", "
+                + luggageCapacity + ", " + numberOfSears + ", " + currentFuel + ";\r\n").getBytes();
     }
 
     @Override

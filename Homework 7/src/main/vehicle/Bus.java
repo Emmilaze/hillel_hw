@@ -1,4 +1,4 @@
-package vehicle;
+package main.vehicle;
 
 public class Bus implements Car {
     private int id;
@@ -7,23 +7,27 @@ public class Bus implements Car {
     private int speed;
     private int numberOfSears;
     private int currentFuel;
-    private String color;
 
-    public Bus(int id, int fuelConsumption, int price, int speed, int numberOfSears, int currentFuel, String color) {
+    public Bus(int id, int fuelConsumption, int price, int speed, int numberOfSears, int currentFuel) {
         this.id = id;
         this.fuelConsumption = fuelConsumption;
         this.price = price;
         this.speed = speed;
         this.numberOfSears = numberOfSears;
         this.currentFuel = currentFuel;
-        this.color = color;
     }
 
     @Override
     public String toString() {
         return "Bus #" + getSpeed() + ", numberOfSears = " + numberOfSears + ", currentFuel = " + currentFuel +
-                "L, color = " + color + ", fuelConsumption = " + getFuelConsumption() +
+                "L, fuelConsumption = " + getFuelConsumption() +
                 "L/100 km, price = " + getPrice() + "$, speed = " + getSpeed() + "km/h.";
+    }
+
+    @Override
+    public byte[] writeToFile() {
+        return ("Bus, " + getId() + ", " + getFuelConsumption() + ", " + getPrice() + ", " + getSpeed() + ", " +
+                numberOfSears + ", " + currentFuel + ";\r\n").getBytes();
     }
 
     @Override

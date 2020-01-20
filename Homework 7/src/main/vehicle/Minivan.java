@@ -1,4 +1,4 @@
-package vehicle;
+package main.vehicle;
 
 public class Minivan implements Car {
     private int id;
@@ -22,6 +22,11 @@ public class Minivan implements Car {
         return "Minivan #" + getId() + ", numberOfSears = " + numberOfSears + ", currentFuel = " + currentFuel +
                 ", fuelConsumption = " + getFuelConsumption() + "L/100 km, price = " + getPrice() +
                 "$, speed = " + getSpeed() + "km/h.";
+    }
+
+    public byte[] writeToFile() {
+        return ("Minivan, " + getId() + ", " + getFuelConsumption() + ", " + getPrice() + ", " + getSpeed() + ", " +
+                numberOfSears + ", " + currentFuel + ";\r\n").getBytes();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package vehicle;
+package main.vehicle;
 
 public class ElectroCar implements Car {
     private int id;
@@ -6,22 +6,26 @@ public class ElectroCar implements Car {
     private int price;
     private int speed;
     private int batteryCharge;
-    private String color;
 
-    public ElectroCar(int id, int fuelConsumption, int price, int speed, int batteryCharge, String color) {
+    public ElectroCar(int id, int fuelConsumption, int price, int speed, int batteryCharge) {
         this.id = id;
         this.fuelConsumption = fuelConsumption;
         this.price = price;
         this.speed = speed;
         this.batteryCharge = batteryCharge;
-        this.color = color;
     }
 
     @Override
     public String toString() {
-        return "ElectroCar #" + getId() + ", battery charge = " + batteryCharge + ", color = " + color +
-                ", fuel consumption = " + getFuelConsumption() + ", price = " + getPrice() + ", speed = " +
+        return "ElectroCar #" + getId() + ", battery charge = " + batteryCharge + ", fuel consumption = "
+                + getFuelConsumption() + ", price = " + getPrice() + ", speed = " +
                 getSpeed() + ".";
+    }
+
+    @Override
+    public byte[] writeToFile() {
+        return ("ElectroCar, " + getId() + ", " + getFuelConsumption() + ", " + getPrice() + ", " + getSpeed() +
+                ", " + batteryCharge + ";\r\n").getBytes();
     }
 
     @Override
