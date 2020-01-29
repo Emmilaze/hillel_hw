@@ -31,6 +31,11 @@ public class Bus implements Car {
     }
 
     @Override
+    public int compareCars(Car o2) {
+        return this.getFuelConsumption() - o2.getFuelConsumption();
+    }
+
+    @Override
     public int getId() {
         return id;
     }

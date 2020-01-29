@@ -5,6 +5,7 @@ import main.vehicle.*;
 import java.io.*;
 
 public class CarParkStorage {
+
     private File inputFile = new File("src/resources/InputListOfCars.txt");
     private File outputFile = new File("src/resources/OutputListOfCars.txt");
 
@@ -44,34 +45,34 @@ public class CarParkStorage {
             String[] carProperties = car.split(", ");
             switch (carProperties[0]) {
                 case ("PassengerCar"):
-                    cars = increaseMassive(cars);
+                    cars = increaseArray(cars);
                     cars[cars.length - 1] = new PassengerCar(Integer.parseInt(carProperties[1]),
                             Integer.parseInt(carProperties[2]), Integer.parseInt(carProperties[3]),
                             Integer.parseInt(carProperties[4]), Integer.parseInt(carProperties[5]),
                             Integer.parseInt(carProperties[6]), Integer.parseInt(carProperties[7]));
                     break;
                 case ("Bus"):
-                    cars = increaseMassive(cars);
+                    cars = increaseArray(cars);
                     cars[cars.length - 1] = new Bus(Integer.parseInt(carProperties[1]),
                             Integer.parseInt(carProperties[2]), Integer.parseInt(carProperties[3]),
                             Integer.parseInt(carProperties[4]), Integer.parseInt(carProperties[5]),
                             Integer.parseInt(carProperties[6]));
                     break;
                 case ("ElectroCar"):
-                    cars = increaseMassive(cars);
+                    cars = increaseArray(cars);
                     cars[cars.length - 1] = new ElectroCar(Integer.parseInt(carProperties[1]),
                             Integer.parseInt(carProperties[2]), Integer.parseInt(carProperties[3]),
                             Integer.parseInt(carProperties[4]), Integer.parseInt(carProperties[5]));
                     break;
                 case ("Minivan"):
-                    cars = increaseMassive(cars);
+                    cars = increaseArray(cars);
                     cars[cars.length - 1] = new Minivan(Integer.parseInt(carProperties[1]),
                             Integer.parseInt(carProperties[2]), Integer.parseInt(carProperties[3]),
                             Integer.parseInt(carProperties[4]), Integer.parseInt(carProperties[5]),
                             Integer.parseInt(carProperties[6]));
                     break;
                 case ("Truck"):
-                    cars = increaseMassive(cars);
+                    cars = increaseArray(cars);
                     cars[cars.length - 1] = new Truck(Integer.parseInt(carProperties[1]),
                             Integer.parseInt(carProperties[2]), Integer.parseInt(carProperties[3]),
                             Integer.parseInt(carProperties[4]), Integer.parseInt(carProperties[5]),
@@ -82,7 +83,7 @@ public class CarParkStorage {
         return cars;
     }
 
-    public Car[] increaseMassive(Car[] array) {
+    public Car[] increaseArray(Car[] array) {
         Car[] newArray = new Car[array.length + 1];
         for (int i = 0; i < array.length; i++) {
             newArray[i] = array[i];

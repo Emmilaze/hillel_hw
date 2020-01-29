@@ -10,4 +10,6 @@ public interface Car {
     int getSpeed();
 
     byte[] writeToFile();
+
+    int compareCars(Car o2);
 }
