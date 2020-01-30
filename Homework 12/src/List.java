@@ -1,7 +1,10 @@
-public class List<T> {
+import java.util.Iterator;
+
+public class List<T> implements Iterable<T>, Iterator {
     private Node<T> first;
     private Node<T> last;
     private int size = 0;
+    private Node<T> iteratorPointer = this.first;
 
     public List() {
     }
@@ -11,41 +14,43 @@ public class List<T> {
         last = new Node<>(array[array.length - 1]);
         size++;
         for (int i = 1; i < array.length; i++) {
-            addLast(new Node<>(array[i]));
+            addLast(array[i]);
         }
     }
 
-    public void addFirst(Node<T> item) {
+    public void addFirst(T item) {
+        Node<T> newNode = new Node<T>(item);
         if (last == null)
-            last = item;
-        item.next = first;
-        first = item;
+            last = newNode;
+        newNode.next = first;
+        first = newNode;
         size++;
     }
 
-    public void addLast(Node<T> item) {
-        if (last == null) {
-            first = item;
+    public void addLast(T item) {
+        Node<T> newNode = new Node<T>(item);
+        if (last == null && first == null) {
+            first = newNode;
+            last = newNode;
             size++;
             return;
         }
-        item.next = null;
-        Node last = first;
-        while (last.next != null)
-            last = last.next;
-        last.next = item;
+
+        last.next = newNode;
+        last = newNode;
         size++;
         return;
     }
 
-    public void add(Node item, int index) {
+    public void add(T item, int index) {
+        Node<T> newNode = new Node<T>(item);
         if (index <= size && index > 0) {
             Node currentNode = first;
             for (int i = 1; i < index; i++) {
                 currentNode = currentNode.next;
             }
-            item.next = currentNode.next;
-            currentNode.next = item;
+            newNode.next = currentNode.next;
+            currentNode.next = newNode;
             size++;
         }
     }
@@ -79,16 +84,16 @@ public class List<T> {
     }
 
     public void swapNodes(int firstIndex, int secondIndex) {
-        Node firstNode = getNode(firstIndex);
-        Node secondNode = getNode(secondIndex);
+        T firstNode = getByIndex(firstIndex);
+        T secondNode = getByIndex(secondIndex);
         if (firstNode == secondNode) return;
         Node prevX = null, currX = first;
-        while (currX != null && currX.item != firstNode.item) {
+        while (currX != null && currX.item != firstNode) {
             prevX = currX;
             currX = currX.next;
         }
         Node prevY = null, currY = first;
-        while (currY != null && currY.item != secondNode.item) {
+        while (currY != null && currY.item != secondNode) {
             prevY = currY;
             currY = currY.next;
         }
@@ -114,12 +119,12 @@ public class List<T> {
         return first == null && size == 0;
     }
 
-    public Node getNode(int index) {
+    public T getByIndex(int index) {
         Node current = first;
         int count = 0;
         while (current != null) {
             if (count == index) {
-                return current;
+                return (T) current.item;
             }
             count++;
             current = current.next;
@@ -139,4 +144,31 @@ public class List<T> {
     public int size() {
         return size;
     }
+
+    private void resetIteratorPointer() {
+        iteratorPointer=this.first;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (iteratorPointer == null) {
+            resetIteratorPointer();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public T next() {
+        T data = iteratorPointer.item;
+        iteratorPointer = iteratorPointer.next;
+        return data;
+    }
+
 }

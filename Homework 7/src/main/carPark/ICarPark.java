@@ -2,10 +2,12 @@ package main.carPark;
 
 import main.vehicle.Car;
 
-public interface ICarPark {
-    Car[] sortByFuel();
+import java.util.ArrayList;
 
-    Car[] findBySpeed(int min, int max);
+public interface ICarPark {
+    ArrayList<Car> sortByFuel();
+
+    ArrayList<Car> findBySpeed(int min, int max);
 
     int countAllCost();
 }

@@ -2,40 +2,50 @@ package main.carPark;
 
 import main.vehicle.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class CarPark implements ICarPark {
 
-    public Car[] cars;
+    public ArrayList<Car> cars;
     private CarParkStorage storage = new CarParkStorage();
 
     public CarPark() {
         this.cars = storage.getCarsFromFile();
     }
 
-    @Override
-    public Car[] sortByFuel() {
-        for (int i = cars.length - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (cars[j].getFuelConsumption() > cars[j + 1].getFuelConsumption()) {
-                    Car temporal = cars[j];
-                    cars[j] = cars[j + 1];
-                    cars[j + 1] = temporal;
-                }
-            }
+    private Comparator<Car> fuelComparator = new Comparator<Car>() {
+        @Override
+        public int compare(Car o1, Car o2) {
+            return o1.getFuelConsumption() - o2.getFuelConsumption();
         }
+    };
+
+    private Comparator<Car> lambdaComparator = (o1, o2) -> o1.getFuelConsumption() - o2.getFuelConsumption();
+
+    private int compareFuel(Car o1, Car o2){
+        return o1.getFuelConsumption() - o2.getFuelConsumption();
+    }
+
+    public ArrayList<Car> sortByFuel() {
+        Collections.sort(cars, fuelComparator);
+        Collections.sort(cars, lambdaComparator);
+        Collections.sort(cars, Car::compareCars);
+        Collections.sort(cars, this::compareFuel);
         storage.putCarsToFile(cars);
         return cars;
     }
 
     @Override
-    public Car[] findBySpeed(int min, int max) {
-        Car[] array = new Car[0];
+    public ArrayList<Car> findBySpeed(int min, int max) {
+        ArrayList<Car> list = new ArrayList<>();
         for (Car car : cars) {
             if (car.getSpeed() >= min && car.getSpeed() <= max) {
-                array = storage.increaseMassive(array);
-                array[array.length - 1] = car;
+                list.add(car);
             }
         }
-        return array;
+        return list;
     }
 
     @Override
