@@ -2,17 +2,17 @@ package main;
 
 import main.vehicle.Car;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class VehicleView {
 
-    public void printSorting(ArrayList<Car> list) {
+    public void printSorting(List<Car> list) {
         for (Car vehicle : list) {
             System.out.println("Vehicle #" + vehicle.getId() + ", fuel consumption: " + vehicle.getFuelConsumption());
         }
     }
 
-    public void printSpeed(ArrayList<Car> list, int min, int max) {
+    public void printSpeed(List<Car> list, int min, int max) {
         System.out.println("\nCars with speed between " + min + " and " + max + ":");
         for (Car vehicle : list) {
             System.out.println(vehicle);

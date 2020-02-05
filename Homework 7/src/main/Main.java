@@ -7,7 +7,9 @@ public class Main {
         CarPark carPark = new CarPark();
         VehicleView vehicleView = new VehicleView();
 
-        vehicleView.printSorting(carPark.sortByFuel());
+//        vehicleView.printSorting(carPark.sortByFuel());
+        carPark.sortByFuel();
+        System.out.println(carPark.toString());
         vehicleView.printSpeed(carPark.findBySpeed(90, 110), 90, 100);
         vehicleView.printCost(carPark.countAllCost());
     }

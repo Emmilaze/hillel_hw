@@ -4,6 +4,7 @@ import main.vehicle.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CarParkStorage {
     private File inputFile = new File("src/resources/InputListOfCars.txt");
@@ -23,10 +24,10 @@ public class CarParkStorage {
                 e.printStackTrace();
             }
         }
-        return getCarsFromByte(string);
+        return (ArrayList<Car>) getCarsFromByte(string);
     }
 
-    public void putCarsToFile(ArrayList<Car> cars) {
+    public void putCarsToFile(List<Car> cars) {
         if (outputFile.isFile()) {
             try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile, false)) {
                 for (Car car : cars) {
@@ -38,8 +39,8 @@ public class CarParkStorage {
         }
     }
 
-    private ArrayList<Car> getCarsFromByte(String string) {
-        ArrayList<Car> cars = new ArrayList<>();
+    private List<Car> getCarsFromByte(String string) {
+        List<Car> cars = new ArrayList<>();
         for (String car : string.split(";\\r\\n")) {
             String[] carProperties = car.split(", ");
             switch (carProperties[0]) {
@@ -75,13 +76,5 @@ public class CarParkStorage {
             }
         }
         return cars;
-    }
-
-    public Car[] increaseMassive(Car[] array) {
-        Car[] newArray = new Car[array.length + 1];
-        for (int i = 0; i < array.length; i++) {
-            newArray[i] = array[i];
-        }
-        return newArray;
     }
 }
