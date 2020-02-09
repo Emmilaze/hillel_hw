@@ -65,7 +65,7 @@ public class Converter {
         Stack<Double> stack = new Stack<>();
         for (int i = 0; i < expression.length(); i++) {
             char c = expression.charAt(i);
-            if(c==' ')
+            if (c == ' ')
                 continue;
             if (c == '*' || c == '/' || c == '^' || c == '+' || c == '-') {
                 double s1 = stack.pop();
@@ -74,8 +74,8 @@ public class Converter {
                 stack.push(temp);
             } else {
                 double num = 0;
-                while(Character.isDigit(c)) {
-                    num = num*10 + (c-'0');
+                while (Character.isDigit(c)) {
+                    num = num * 10 + (c - '0');
                     i++;
                     c = expression.charAt(i);
                 }
