@@ -1,7 +1,6 @@
 
 *.class
 *.iml
-.xml
 .idea/
 *.kotlin_module
 out/
