@@ -1,8 +1,10 @@
 package com.hillel.webapp.filmlibrary.db;
 
 import com.hillel.webapp.filmlibrary.film.Film;
-import com.hillel.webapp.filmlibrary.people.Actor;
-import com.hillel.webapp.filmlibrary.people.Director;
+import com.hillel.webapp.filmlibrary.person.Actor;
+import com.hillel.webapp.filmlibrary.person.Director;
+import com.hillel.webapp.filmlibrary.user.Role;
+import com.hillel.webapp.filmlibrary.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +13,33 @@ import java.util.List;
 import static com.hillel.webapp.filmlibrary.db.DBConnectionHolder.*;
 
 public class DataBaseQueries {
+    public static DataBaseQueries DBManager;
+    private DBConnectionHolder connectionHolder;
+
+    private static final String FilmId = "SELECT * FROM film_library.films WHERE title = ?";
+    private static final String ActorsByFilm = "SELECT * FROM film_library.cast_team RIGHT JOIN " +
+            "film_library.actors ON cast_team.actor_id = actors.id WHERE film_id = ?;";
+    private static final String ActorsByFilmAmount = "SELECT * FROM film_library.actors a JOIN " +
+            "(SELECT actor_id, count(film_id) amount FROM film_library.cast_team GROUP BY actor_id) af" +
+            " on (a.id = af.actor_id) WHERE af.amount >= ?;";
+    private static final String DeleteQuery = "DELETE FROM film_library.films WHERE date_part('year', " +
+            "age(current_date, premiere)) > ?;";
+    private static final String FilmsByActor = "SELECT * FROM film_library.cast_team " +
+            "RIGHT JOIN film_library.films ON film_id = films.id " +
+            "RIGHT JOIN film_library.directors ON films.director_id = directors.id WHERE actor_id = ?;";
+    private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM film_library.users WHERE username = ?";
+
+    private DataBaseQueries() {
+        connectionHolder = new DBConnectionHolder();
+        connectionHolder.connect();
+    }
+
+    public static DataBaseQueries getInstance() {
+        if (DBManager == null) {
+            DBManager = new DataBaseQueries();
+        }
+        return DBManager;
+    }
 
     public List<Actor> getActorsByFilm(int id) {
         List<Actor> actors = new ArrayList<>();
@@ -135,5 +164,25 @@ public class DataBaseQueries {
             e.printStackTrace();
         }
         return films;
+    }
+
+    public User findUserByUsername(String username) {
+        User user = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_USERNAME)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    user = new User(rs.getInt("id"), rs.getString("username"),
+                            rs.getString("password"), Role.byNumber(rs.getInt("role")));
+                }
+                return user;
+            } catch (SQLException e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

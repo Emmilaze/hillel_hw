@@ -1,7 +1,7 @@
 package com.hillel.webapp.filmlibrary.film;
 
-import com.hillel.webapp.filmlibrary.people.Actor;
-import com.hillel.webapp.filmlibrary.people.Director;
+import com.hillel.webapp.filmlibrary.person.Actor;
+import com.hillel.webapp.filmlibrary.person.Director;
 
 import java.util.Date;
 import java.util.List;

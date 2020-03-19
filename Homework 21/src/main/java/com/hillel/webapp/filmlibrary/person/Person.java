@@ -1,4 +1,4 @@
-package com.hillel.webapp.filmlibrary.people;
+package com.hillel.webapp.filmlibrary.person;
 
 import java.util.Date;
 

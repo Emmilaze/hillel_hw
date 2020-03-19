@@ -11,5 +11,8 @@
     <input type="number" name="years">
     <button type="submit">Delete</button>
 </form>
+<c:if test="${not empty error}">
+    <c:out value="${error}"/>
+</c:if>
 </body>
 </html>

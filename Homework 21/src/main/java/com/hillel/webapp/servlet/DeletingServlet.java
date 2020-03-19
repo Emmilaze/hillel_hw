@@ -1,6 +1,6 @@
 package com.hillel.webapp.servlet;
 
-import com.hillel.webapp.filmlibrary.FilmLibrary;
+import com.hillel.webapp.service.impl.FilmLibrary;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,17 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/ServletForActorsByMovie")
-public class ServletForActorsByMovie extends HttpServlet {
-
+@WebServlet("/ServletForDeleting")
+public class DeletingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/FilmNameForm.jsp").forward(request, response);
+        request.getRequestDispatcher("/jsp/deletingForm.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String filmName = request.getParameter("filmName");
-        request.setAttribute("actors", FilmLibrary.getInstance().getActorsByFilm(filmName));
-        request.setAttribute("film", filmName);
-        request.getRequestDispatcher("/getActorsByFilm.jsp").forward(request, response);
+        FilmLibrary.getInstance().deleteOldFilms(Integer.parseInt(request.getParameter("years")));
+        request.getRequestDispatcher("/jsp/deletingSuccess.jsp").forward(request, response);
     }
 }
