@@ -123,6 +123,7 @@ public class DataBaseQueries {
         List<Actor> actors = new ArrayList<>();
         try (ResultSet rs = statement.executeQuery(sql)) {
             while (rs.next()) {
+                System.out.println(5);
                 actors.add(new Actor(rs.getInt("id"), rs.getString("name"),
                         rs.getDate("birth")));
             }
@@ -148,7 +149,7 @@ public class DataBaseQueries {
         List<Film> films = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(FilmsByActor)) {
             preparedStatement.setInt(1, id);
-            try (ResultSet rs = statement.executeQuery(sql)) {
+            try (ResultSet rs = preparedStatement.executeQuery(sql)) {
                 while (rs.next()) {
                     films.add(new Film(rs.getInt("film_id"), rs.getString("title"),
                             new Director(rs.getInt("director_id"), rs.getString("name"),

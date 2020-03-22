@@ -1,24 +1,21 @@
 package com.hillel.webapp.filmlibrary.db;
 
-import java.io.IOException;
-import java.io.InputStream;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.*;
-import java.util.Properties;
 
 public class DBConnectionHolder {
     public static Connection connection;
     public static Statement statement;
 
     public void connect() {
-        Properties property = new Properties();
-        try (InputStream inputStream = getClass()
-                .getClassLoader().getResourceAsStream("config.properties")) {
-            property.load(inputStream);
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection(property.getProperty("db.host"), property.getProperty("db.login"),
-                    property.getProperty("db.password"));
+        try {
+            InitialContext initContext = new InitialContext();
+            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/postgres");
+            connection = ds.getConnection();
             statement = connection.createStatement();
-        } catch (IOException | SQLException | ClassNotFoundException e) {
+        } catch (SQLException | NamingException e) {
             e.printStackTrace();
         }
     }
