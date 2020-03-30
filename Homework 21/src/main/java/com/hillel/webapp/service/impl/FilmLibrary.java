@@ -58,7 +58,6 @@ public class FilmLibrary implements FilmLibraryService {
 
     @Override
     public List<Actor> getActorsDirectors() {
-        System.out.println(1.2);
         List<Actor> actors = requests.getActorsDirectors();
         if (!actors.isEmpty()) {
             actors = setFilms(actors);
